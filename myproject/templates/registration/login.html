@@ -1,0 +1,22 @@
+
+
+        <form class="form-signin" method="post" action="">{% csrf_token %}
+            <h2 class="form-signin-heading">Please sign in</h2>
+            {% if form.errors %}
+                <p style="color: red">Your username and password didn't match. Please try again.</p>
+            {% endif %}
+            <table>
+                {{ login_form.as_table }} 
+            </table>
+            <div class="checkbox">
+				
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="btn btn-lg btn-block" type="submit" style="background-color: black; color: white">Sign in</button>
+            <br>
+            <a href="{% url 'user' %}" style="color: black"><span class="glyphicon glyphicon-user"></span> Create Account</a>
+        </form>
+
+

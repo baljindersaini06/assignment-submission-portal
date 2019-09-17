@@ -1,0 +1,21 @@
+{% extends 'myapp/layout.html' %}
+    {% block content %}
+    <style>
+    p{
+      margin-left: 2%;
+    }
+
+    a{
+        color: black;
+    }
+    </style>
+<br><br><br><br>
+{% if user.is_authenticated %}
+  <p>Welcome {{ user.username }}
+  <br>your account has been activated</p>
+  <a href="{% url 'logout' %}">logout</a>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+{% endblock %}
