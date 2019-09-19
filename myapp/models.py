@@ -28,15 +28,12 @@ class Assignment(models.Model):
     student = models.ForeignKey(User, on_delete=True, null=True, related_name='student')
     name = models.CharField(max_length=50)
     document = models.FileField(upload_to='documents/', validators=[validate_file_extension],blank=True, null=True)
-    created_on = models.DateTimeField()
+    created_on = models.DateTimeField(default=datetime.datetime.now, null=True)
     deadline = models.DateField()
 
     def __str__(self):
         return self.name
 
-    def save(self):
-        self.created_on = datetime.date.today()
-        super(Assignment, self).save()
 
 
 class Submission(models.Model):
@@ -54,8 +51,20 @@ class Credit(models.Model):
     student_from = models.ForeignKey(User, on_delete=True, null=True, related_name='student_from')
     stars = models.IntegerField(default=0, blank=True, null=True)
     comments = models.CharField(max_length=200,default="", blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=True, null=True)
 
     def __str__(self):
         return self.comments
 
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=True,null=True, related_name='sender')
+    reciever = models.ForeignKey(User, on_delete=True,null=True, related_name='reciever')
+    text = models.CharField(max_length=500)
+    sent_time = models.DateTimeField()
+
+    class Meta:
+        ordering = ('sent_time',)
+
+    def save(self):
+        self.sent_time = datetime.datetime.now()
+        super(Message, self).save()

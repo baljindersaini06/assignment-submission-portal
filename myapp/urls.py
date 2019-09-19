@@ -1,7 +1,8 @@
 from django.urls import path
 from django.conf.urls import url
-from . import views
+from . import views 
 from friendship.views import friendship_add_friend, view_friends
+from .views import MessageView
 
 
 urlpatterns=[
@@ -15,7 +16,7 @@ urlpatterns=[
     path('teacherdashboard', views.teacherView, name='teacher'),
     path('', views.user_login, name='userlogin'),
     path('activates/<uidb64>/<token>/',views.activates, name='activates'),
-    path('teacher/assign', views.assignView, name='teacher/assign'),
+    path('teacher/assign/<int:user_id>', views.assignView, name='teacher/assign'),
     path('student/submit', views.submissionView, name='student/submit'),
     path('teacher/revert', views.revertView, name='teacher/revert'),
     path('student/listing', views.listingView, name='student/listing'),
@@ -27,7 +28,12 @@ urlpatterns=[
     path('requests_detail/<int:friendship_request_id>', views.friendship_requests_detail, name='requests_detail'),
     path('accept/<int:friendship_request_id>', views.friendship_accept, name='accept'),
     path('decline/<int:friendship_request_id>', views.friendship_reject, name='decline'),
-    path('friends/<int:user_id>', views.view_friends, name='friends')
-    
+    path('friends/<int:user_id>', views.view_friends, name='friends'),
+    path('studentfriends/<int:user_id>', views.student_friends, name='studentfriends'),
+    path('text/<int:user_id>', views.view_message, name='text'),
+    path('sendmsg/<int:user_id>', views.create_message, name='sendmsg'),
+    path('addmessage',MessageView.as_view(), name='addmessage'),
+    path('chat/<int:user_id>', views.message_post, name='chat'),
+    path('dashboard', views.dashboard_view, name='dashboard'),
     
 ]

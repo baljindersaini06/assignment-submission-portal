@@ -206,7 +206,7 @@ button:hover{
                 
                     <!-- <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li> -->
                     <li><a href="#"><i class="fa fa-fw fa-user"></i>{{ user.username }}</a></li>
-                    <li><a href="{% url 'teacher' %}">Back</a></li> 
+                    <li><a href="{% url 'dashboard' %}">Back</a></li> 
                     <li><a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
             </li>
         </ul>
@@ -216,12 +216,6 @@ button:hover{
                 
                 <li>
                     <a href="{% url 'signup' %}"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i>Add Student</a>
-                </li>
-                <li>
-                    <a href="{% url 'teacher/assign' %}"><i class="fa fa-fw fa-paper-plane-o"></i>Add Assignment</a>
-                </li>
-                <li>
-                    <a href="{% url 'teacher/revert' %}"><i class="fa fa-fw fa fa-question-circle"></i>Revert Assignment</a>
                 </li>
                 <li>
                     <a href="{% url 'teacher/sub' %}"><i class="fa fa-fw fa fa-question-circle"></i>Submitted Assignment</a>

@@ -1,5 +1,5 @@
 from django import forms
-from myapp.models import User, Assignment, Submission, Credit
+from myapp.models import User, Assignment, Submission, Credit, Message
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 
@@ -87,7 +87,7 @@ class SetPasswordForm(forms.ModelForm):
 class AssignmentForm(forms.ModelForm):
 	class Meta:
 		model = Assignment
-		fields = ['teacher','student', 'name','document','deadline']
+		fields = ['name','document','deadline']
 
 
 class SubmissionForm(forms.ModelForm):
@@ -100,3 +100,8 @@ class RevertForm(forms.ModelForm):
     class Meta:
         model = Credit
         fields = ['assignment', 'teacher_to', 'student_from', 'stars', 'comments']
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['text']

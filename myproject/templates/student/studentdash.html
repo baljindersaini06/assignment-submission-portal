@@ -1,3 +1,4 @@
+{% load static %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -163,8 +164,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://cijulenlinea.ucr.ac.cr/dev-users/">
-                <img src="http://placehold.it/200x50&text=LOGO" alt="LOGO"">
+            <a class="navbar-brand" href="">
+                <img src="{% static 'pic/871256.png' %}" alt="LOGO"" width="150px">
             </a>
         </div>
         <!-- Top Menu Items -->
@@ -191,7 +192,15 @@
                 <li>
                     <a href="{% url 'list' %}"><i class="fa fa-fw fa fa-question-circle"></i>Show Teacher</a>
                 </li>
-                
+                <li>
+                    <a href="{% url 'studentfriends' user.id %}"><i class="fa fa-fw fa fa-question-circle"></i>show friends</a>
+                </li>
+                <!-- <li>
+                    <a href="{% url 'sendmsg' user.id %}"><i class="fa fa-fw fa fa-question-circle"></i>send messages</a>
+                </li>
+                <li>
+                    <a href="{% url 'addmessage' %}"><i class="fa fa-fw fa fa-question-circle"></i>create messages</a>
+                </li> -->
             </ul>
         </div>
         <!-- /.navbar-collapse -->

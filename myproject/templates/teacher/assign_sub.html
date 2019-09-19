@@ -1,3 +1,4 @@
+{% load static %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -192,8 +193,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://cijulenlinea.ucr.ac.cr/dev-users/">
-                <img src="http://placehold.it/200x50&text=LOGO" alt="LOGO"">
+            <a class="navbar-brand" href="">
+                <img src="{% static 'pic/download.png' %}" alt="LOGO"" width="200px" height="70px">
             </a>
         </div>
         <!-- Top Menu Items -->
@@ -205,7 +206,7 @@
                 
                     <!-- <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li> -->
                     <li><a href="#"><i class="fa fa-fw fa-user"></i>{{ user.username }}</a></li>
-                    <li class="divider"></li>
+                    <li><a href="{% url 'dashboard' %}"><i class="fa fa-fw fa-user"></i>Back</a></li>
                     <li><a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
             </li>
         </ul>
@@ -217,18 +218,11 @@
                     <a href="{% url 'signup' %}"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i>Add Student</a>
                 </li>
                 <li>
-                    <a href="{% url 'teacher/assign' %}"><i class="fa fa-fw fa-paper-plane-o"></i>Add Assignment</a>
-                </li>
-                <li>
-                    <a href="{% url 'teacher/revert' %}"><i class="fa fa-fw fa fa-question-circle"></i>Revert Assignment</a>
-                </li>
-                <li>
                     <a href="{% url 'teacher/sub' %}"><i class="fa fa-fw fa fa-question-circle"></i>Submitted Assignment</a>
                 </li>
                 <li>
                     <a href="{% url 'requests' %}"><i class="fa fa-fw fa fa-question-circle"></i>show requests</a>
                 </li>
-               
                 <li>
                     <a href="{% url 'friends' user.id %}"><i class="fa fa-fw fa fa-question-circle"></i>show friends</a>
                 </li>
@@ -253,7 +247,6 @@
         <tr>
             <th>ID</th>
             <th>Assignment</th>  
-            <th><a href="">Teacher</a></th>
             <th><a href="">Student</a></th>
             <th>Document</th>
             <th>Submission date</th>
@@ -263,7 +256,6 @@
             {% for a in abc %}
             <td>{{ a.id }}</td>
             <td>{{ a.assignment_name }}</td>
-            <td>{{ a.to_teacher }}</td>
             <td>{{ a.from_student }}</td>
             <td><a href="{{ a.document }}" download>{{ a.document }}</td>
             <td>{{ a.submission_date }}</td>
