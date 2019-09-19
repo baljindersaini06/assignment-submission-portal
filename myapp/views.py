@@ -48,7 +48,7 @@ def user_login(request):
         login_form = LoginForm()
     return render(request, 'myapp/login_base.html', {'login_form': login_form})
 
-
+@login_required
 def dashboard_view(request):
     if request.user.role is 1:
         return render(request, 'student/studentdash.html')
@@ -342,7 +342,7 @@ def friendship_reject(request, friendship_request_id):
             request.user.friendship_requests_received, id=friendship_request_id
         )
         f_request.reject()
-        return redirect("teacher")
+        return redirect("dashboard")
 
     return redirect(
         "requests_detail", friendship_request_id=friendship_request_id
@@ -413,7 +413,7 @@ def assignView(request, user_id):
             assign_form.student=User.objects.get(pk=user_id)
             assign_form.teacher=request.user
             assign_form.save()
-            return HttpResponseRedirect(reverse('teacher'))
+            return HttpResponseRedirect(reverse('dashboard'))
 
     else:
         form = AssignmentForm()
