@@ -281,7 +281,7 @@ button {
                             {% get_by_name friendship_context_object_name as var %}
                         <td>{{ a.id }}</td>
                         <td>{{ a.username }}</td>
-                        <td><button class=""><a href="{% url 'chat' a.id %}">Start Chat</a></button></td>
+                        <td><button class=""><a href="{% url 'teacherchat' a.id %}">Start Chat</a></button></td>
                         
                         <td><a href="{% url 'teacher/assign' a.id %}"><i class="fa fa-fw fa-paper-plane-o"></i>Add Assignment</a></td>
                     </tr>

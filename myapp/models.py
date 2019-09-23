@@ -14,6 +14,14 @@ USER_TYPE_CHOICES = (
 )
 
 
+STAR_TYPE_CHOICE = (
+    (1,'1'),
+    (2,'2'),
+    (3,'3'),
+    (4,'4'),
+    (5,'5')
+)
+
 class User(AbstractUser):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be upto 10 digits")
     phone_no = models.CharField(validators=[phone_regex], max_length=10, blank=True) 
@@ -29,7 +37,7 @@ class Assignment(models.Model):
     name = models.CharField(max_length=50)
     document = models.FileField(upload_to='documents/', validators=[validate_file_extension],blank=True, null=True)
     created_on = models.DateTimeField(default=datetime.datetime.now, null=True)
-    deadline = models.DateField()
+    deadline = models.DateTimeField()
 
     def __str__(self):
         return self.name
@@ -49,7 +57,7 @@ class Credit(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=True)
     teacher_to = models.ForeignKey(User, on_delete=True, null=True, related_name='teacher_to')
     student_from = models.ForeignKey(User, on_delete=True, null=True, related_name='student_from')
-    stars = models.IntegerField(default=0, blank=True, null=True)
+    stars = models.IntegerField(default=0, choices=STAR_TYPE_CHOICE)
     comments = models.CharField(max_length=200,default="", blank=True, null=True)
 
     def __str__(self):

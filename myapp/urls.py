@@ -17,7 +17,7 @@ urlpatterns=[
     path('', views.user_login, name='userlogin'),
     path('activates/<uidb64>/<token>/',views.activates, name='activates'),
     path('teacher/assign/<int:user_id>', views.assignView, name='teacher/assign'),
-    path('student/submit', views.submissionView, name='student/submit'),
+    path('student/submit/<int:teacher_id>/<int:ass_id>', views.submissionView, name='student/submit'),
     path('teacher/revert', views.revertView, name='teacher/revert'),
     path('student/listing', views.listingView, name='student/listing'),
     path('teacher/sub', views.subView, name='teacher/sub'),
@@ -35,5 +35,5 @@ urlpatterns=[
     path('addmessage',MessageView.as_view(), name='addmessage'),
     path('chat/<int:user_id>', views.message_post, name='chat'),
     path('dashboard', views.dashboard_view, name='dashboard'),
-    
+    path('teacherchat/<int:user_id>', views.message_teacher, name='teacherchat'),
 ]

@@ -1,0 +1,35 @@
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+		$(document).ready(function() {
+  
+  $("#source").change(function() {
+    
+    var el = $(this) ;
+    
+    if(el.val() === "ONLINE" ) {
+    $("#status").append("   <option>SHIPPED</option>");
+    }
+      else if(el.val() === "MANUAL" ) {
+        $("#status option:last-child").remove() ; }
+  });
+  
+});
+</script>
+</head>
+<body>
+Source:
+  <select id="source" name="source">
+     <option>MANUAL</option>
+     <option>ONLINE</option>
+</select>
+
+Status:
+
+<select id="status" name="status">
+    <option>OPEN</option>
+      <option>DELIVERED</option>
+   
+</select>
+</body>

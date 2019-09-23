@@ -23,6 +23,9 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView
 from django.db.models import Q
 from django.contrib.admin.views.decorators import staff_member_required
+import datetime
+from time import time
+from django.utils import timezone
 # Create your views here.
 user_model = User
 
@@ -198,20 +201,21 @@ def setpassword(request,uid):
 #     return render(request, 'teacher/add_assign.html', {'form': form})
 
 
-def submissionView(request):
-    if request.user.role is not 1:
-        return render(request, 'myapp/error.html')
-    if request.method == 'POST':
-        form = SubmissionForm(request.POST, request.FILES)
-        #form['student'] = submission.objects.get(from_student=request.POST.get('from_student'))
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.save()
-            return HttpResponse('Assignment has been submitted successfully')
+# def submissionView(request):
+#     if request.user.role is not 1:
+#         return render(request, 'myapp/error.html')
+#     if request.method == 'POST':
+#         form = SubmissionForm(request.POST, request.FILES)
+#         #form['student'] = submission.objects.get(from_student=request.POST.get('from_student'))
+#         if form.is_valid():
+#             form = form.save(commit=False)
+#             form.student=request.user
+#             form.save()
+#             return HttpResponse('Assignment has been submitted successfully')
 
-    else:
-        form = SubmissionForm(instance=request.user)
-    return render(request, 'student/submit_assign.html', {'form': form})
+#     else:
+#         form = SubmissionForm(instance=request.user)
+#     return render(request, 'student/submit_assign.html', {'form': form})
 
 @login_required
 def revertView(request):
@@ -233,6 +237,8 @@ def listingView(request):
     if request.user.role is not 1:
         return render(request, 'myapp/error.html')
     abc = Assignment.objects.filter(student=request.user)
+    now=datetime.date.today()
+    #if abc.deadline<now:
 
     return render (request, 'student/assign_list.html',{'abc': abc})
 
@@ -341,7 +347,7 @@ def friendship_reject(request, friendship_request_id):
         f_request = get_object_or_404(
             request.user.friendship_requests_received, id=friendship_request_id
         )
-        f_request.reject()
+        f_request.delete()
         return redirect("dashboard")
 
     return redirect(
@@ -420,6 +426,32 @@ def assignView(request, user_id):
     return render(request, 'teacher/add_assign.html', {'form': form})
 
 
+def submissionView(request, teacher_id, ass_id):
+    if request.user.role is not 1:
+        return render(request, 'myapp/error.html')
+    if request.method == 'POST':
+        form = SubmissionForm(request.POST, request.FILES)
+        #form['student'] = submission.objects.get(from_student=request.POST.get('from_student'))
+        if form.is_valid():
+            b = Assignment.objects.get(id = ass_id)
+            c = b.deadline
+            print(c)
+            if c > timezone.now():
+                form = form.save(commit=False)
+                form.to_teacher=User.objects.get(pk=teacher_id)
+                form.from_student=request.user
+                form.assignment_name = Assignment.objects.get(id=ass_id)
+                form.save()
+                return HttpResponse('Assignment has been submitted successfully')
+            else:
+                return HttpResponse("Deadline has been excceded")
+
+    else:
+        form = SubmissionForm(instance=request.user)
+    return render(request, 'student/submit_assign.html', {'form': form})
+
+
+
 # @login_required
 # def revertView(request, user_id):
 #     if request.method == 'POST':
@@ -437,6 +469,9 @@ def assignView(request, user_id):
 
 
 def message_post(request, user_id):
+    if request.user.role is not 1:
+        return HttpResponse("invalid user")
+        
     if request.method == 'POST':
         msg_form = MessageForm(request.POST)
 
@@ -453,3 +488,34 @@ def message_post(request, user_id):
         msg = Message.objects.filter(query).order_by('sent_time')
     return render(request, 'chat.html', {'msg_form': msg_form, 'msg':msg})
 
+
+def message_teacher(request, user_id):
+    if request.user.role is not 2:
+        return HttpResponse("invalid user")
+    if request.method == 'POST':
+        msg_form = MessageForm(request.POST)
+
+        if msg_form.is_valid():
+            message_form=msg_form.save()
+            message_form.reciever_id=User.objects.get(pk=user_id)
+            message_form.sender_id=request.user
+            message_form.save()
+            return HttpResponseRedirect(reverse('teacherchat', args=(user_id,)))
+
+    else:
+        msg_form = MessageForm()
+        query = Q(Q(sender_id=request.user)&Q(reciever_id=user_id))|Q(Q(reciever_id=request.user)&Q(sender_id=user_id))
+        msg = Message.objects.filter(query).order_by('sent_time')
+    return render(request, 'chat2.html', {'msg_form': msg_form, 'msg':msg})
+
+
+# class RequestDelete(DeleteView):
+#     model = Campaign
+#     template_name = 'polls/delete.html'
+    
+#     def get_context_data(self, **kwargs):
+#         context = super(RequestDelete, self).get_context_data(**kwargs)
+#         context["campaign_id"] = self.kwargs['pk']
+#         return context
+#     def get_success_url(self):
+#         return reverse('dashboard')    

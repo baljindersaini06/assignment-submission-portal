@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
+<script>
+</script>
 <style>
     @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 @media(min-width:768px) {
@@ -262,7 +263,7 @@
             <td><a href="{{ a.document }}" download>{{ a.document }}</td>
             <td>{{ a.created_on }}</td>
             <td>{{ a.deadline }}</td>
-            <td><a href="{% url 'student/submit' %}">Submit</a></td>
+            <td><a href="{% url 'student/submit' a.teacher_id a.id %}">Submit</a></td>
           </tr>
           {% endfor %}
 

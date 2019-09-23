@@ -93,7 +93,7 @@ class AssignmentForm(forms.ModelForm):
 class SubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
-        fields = ['assignment_name', 'to_teacher', 'from_student', 'document', 'submission_date']
+        fields = ['document', 'submission_date']
 
 
 class RevertForm(forms.ModelForm):

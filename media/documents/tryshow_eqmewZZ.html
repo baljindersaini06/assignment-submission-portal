@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V19</title>
+<!--===============================================================================================-->
+</head>
+
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+				<form class="login100-form validate-form" id="log">
+				{% csrf_token %}
+					<span class="login100-form-title p-b-33">
+						show notes
+					</span>
+					<br><br><br>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<label>Title:</label>
+						<input type="text" name="name" id="name">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div><br>
+
+					<div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
+						<label>Description:</label>
+						<input type="text" name="description" id="description">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div><br>
+
+					<div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
+						<label>User:</label>
+						<input type="text" name="user" id="user">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div><br>
+
+
+					<p><label></label>
+
+					<div class="container-login100-form-btn m-t-20">
+						<button class="login-btn" id="Authbutton">
+							Show
+						</button>
+					</div>
+
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript"></script>
+<script>
+$('#Authbutton').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "http://localhost:8000/api/notes",
+                type: "GET",
+                data:{
+                    "name" : $('#name').val(),
+                    "description" : $('#description').val(),
+                    "user_s": $('#user').val()
+                },
+
+                headers:{
+                	"Authorisation-token": localStorage.getItem('token')
+                }
+
+        });
+    });
+
+</script>
+ 
+	
+</body>	
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+body {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  width: 700px;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+
+input{
+  width: 100%;
+  padding: 12px 20px;
+  margin-left: 20px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+</style>
+</head>
+<body>
+
+<h2>Chat Messages</h2>
+{% for a in msg %}
+<div class="container">
+  <!-- <img src="/w3images/bandmember.jpg" alt="Avatar" style="width:100%;"> -->
+  <h3>{{ a.sender }}</h3>
+  <p>{{ a.text }}</p>
+  <span class="time-right">{{ a.sent_time }}</span>
+</div>
+
+
+
+
+
+<!-- <div class="container darker">
+  <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right" style="width:100%;">
+  <h3>{{ a.reciever }}</h3>
+  <p></p>
+  <span class="time-left">{{ a.sent_time }}</span>
+</div> -->
+{% endfor %}
+</body>
+</html>
+
+
+<!-- {% for a in msg %}
+<h3>{{ a.sender }}</h3>
+<p><li>{{ a.text }}<br> {{ a.sent_time }}</li></p>
+{% endfor %} -->
+
+<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+				<form id="login-form" class="form" method="post" action="">
+					<span class="login100-form-title p-b-33">
+						
+					</span>
+					{% csrf_token %}
+                    <table align="center">
+                        {{ msg_form.as_table }}
+                        </table>
+						<div class="">
+                                <button class="btn btn-primary" align="center">
+                                    Send Message
+                                </button>
+                            </div><br><br>
+
+						
+</form>
