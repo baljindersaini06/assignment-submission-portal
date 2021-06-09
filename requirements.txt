@@ -1,5 +1,5 @@
 astroid==2.2.5
-Django==2.2.5
+Django==2.2.22
 django-friendship==1.8.1
 lazy-object-proxy==1.4.2
 pylint==2.3.1
